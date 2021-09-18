@@ -3,7 +3,6 @@ const bodyParser = require('body-parser')
 const app = express();
 const cors = require('cors');
 const PORT = 8080;
-const Data = require('./work');
 const fs = require('fs');
 
 app.listen(
