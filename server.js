@@ -1,13 +1,14 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express();
+const SERVER_NAME = process.env.SERVER_NAME | 'http://localhost';
+const SERVER_PORT = process.env.SERVER_PORT | '8080';
 const cors = require('cors');
-const PORT = 8080;
 const fs = require('fs');
 
 app.listen(
-  PORT,
-  () => console.log(`it's alive on http://localhost:${PORT}`)
+  SERVER_PORT,
+  () => console.log(`it's alive on ${SERVER_NAME}:${SERVER_PORT}`)
 );
 
 app.use(bodyParser.json());
@@ -40,6 +41,7 @@ app.get('/v1/work/:id', (req, res) => {
 });
 
 app.post('/v1/work/:id', (req, res) => {
-  res.status(200).send(`POST #2 works. 'param' is '${req.params.id}'.`);
-  fs.writeFileSync('work.json', JSON.stringify(Data));
+  const payload = JSON.stringify(req.body);
+  res.status(200).send(`POST #2 works. 'req.body' is '${payload}'.`);
+  fs.writeFileSync('work.json', payload);
 });
