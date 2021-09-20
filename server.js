@@ -1,14 +1,13 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express();
-const SERVER_NAME = process.env.SERVER_NAME | 'http://localhost';
-const SERVER_PORT = process.env.SERVER_PORT | '8080';
+const SERVER_PORT = process.env.SERVER_PORT || '8080';
 const cors = require('cors');
 const fs = require('fs');
 
 app.listen(
   SERVER_PORT,
-  () => console.log(`it's alive on ${SERVER_NAME}:${SERVER_PORT}`)
+  () => console.log(`it's alive on port:${SERVER_PORT}`)
 );
 
 app.use(bodyParser.json());
