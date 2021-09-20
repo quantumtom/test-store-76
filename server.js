@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express();
-const SERVER_PORT = process.env.SERVER_PORT || '8080';
+const SERVER_PORT = process.env.SERVER_PORT || '80';
 const cors = require('cors');
 const fs = require('fs');
 
@@ -35,12 +35,13 @@ app.post('/v1/work/create', (req, res) => {
 });
 
 app.get('/v1/work/:id', (req, res) => {
-  res.status(200).send(`GET #2 works. 'param' is '${req.params.id}.'`);
+  const requestId = req.params.id;
+  res.status(200).send(`GET #2 works. 'req.params.id' is '${requestId}.'`);
   res.end();
 });
 
 app.post('/v1/work/:id', (req, res) => {
-  const payload = JSON.stringify(req.body);
-  res.status(200).send(`POST #2 works. 'req.body' is '${payload}'.`);
-  fs.writeFileSync('work.json', payload);
+  const requestBody = JSON.stringify(req.body);
+  res.status(200).send(`POST #2 works. 'req.body' is '${requestBody}'.`);
+  fs.writeFileSync('work.json', requestBody);
 });
