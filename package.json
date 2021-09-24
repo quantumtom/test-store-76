@@ -5,7 +5,7 @@
     "node": "14.17.6",
     "npm": "6.14.15"
   },
-  "description": "Minimalist HTTP ReST with ExpressJS. ",
+  "description": "Minimalist HTTP CRUD service with ExpressJS. ",
   "repository": "https://github.com/quantumtom/test-store-76",
   "main": "server.js",
   "scripts": {
