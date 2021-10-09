@@ -1,25 +1,28 @@
 const express = require('express')
 const app = express()
-const router = express.Router()
+const bodyParser = require('body-parser')
+const SERVER_PORT = process.env.SERVER_PORT || '8080';
+const cors = require('cors');
 
-// simple logger for this router's requests
-// all requests to this router will first hit this middleware
-router.use(function (req, res, next) {
-  console.log('%s %s %s', req.method, req.url, req.path)
-  next()
-})
+const vOneShortsRouter = require('./routes/vOneShortsRoutes')
+const vOneAdvertsRouter = require('./routes/vOneAdvertsRoutes')
+const shortsRouter = require('./routes/shorts.routes')
+const advertsRouter = require('./routes/adverts.routes')
 
-// this will only be invoked if the path starts with /bar from the mount point
-router.use('/bar', function (req, res, next) {
-  // ... maybe some additional /bar logging ...
-  next()
-})
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded(
+  {
+    extended: true
+  }))
 
-// always invoked
-router.use(function (req, res, next) {
-  res.send('Hello World')
-})
+app.use(cors())
+app.disable('x-powered-by')
 
-app.use('/foo', router)
+app.use('/v1/shorts/', vOneShortsRouter)
+app.use('/v1/work/', vOneAdvertsRouter)
+app.use('/v2/shorts/', shortsRouter)
+app.use('/v2/adverts/', advertsRouter)
 
-app.listen(3000)
+app.listen(SERVER_PORT,
+  () => console.log(`the router is alive on port:${SERVER_PORT}`)
+)
