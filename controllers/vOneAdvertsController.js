@@ -3,7 +3,7 @@ const filePath = './work.json'
 
 exports.createOneRequest = (req, res) => {
   const payload = JSON.stringify(req.body);
-  res.status(200).send(`POST #1 works. 'req.body' is '${payload}.'`);
+  res.status(200).send('v1 work write endpoint functional.');
   fs.writeFileSync('work.json', payload);
 }
 
