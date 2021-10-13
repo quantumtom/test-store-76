@@ -3,8 +3,28 @@ const filePath = './work.json'
 
 exports.createOneRequest = (req, res) => {
   const payload = JSON.stringify(req.body);
-  res.status(200).send('v1 work write endpoint functional.');
-  fs.writeFileSync('work.json', payload);
+
+  res.format({
+    'text/plain': function () {
+      res.send('hey')
+    },
+
+    'text/html': function () {
+      res.send('<p>hey</p>')
+    },
+
+    'application/json': function () {
+      res.send({ message: 'hey' })
+    },
+
+    default: function () {
+      // log the request and respond with 406
+      res.status(406).send('Not Acceptable')
+    }
+  });
+
+  res.status(200).send({'messages':'v1 work write endpoint functional.'});
+  // fs.writeFileSync('work.json', payload);
 }
 
 exports.readAllRequest = (req, res) => {

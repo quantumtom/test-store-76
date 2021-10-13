@@ -34,15 +34,3 @@ describe('v1 work read endpoint', () => {
   });
 });
 
-describe('v1 work write endpoint', () => {
-  it('should return the correct data', async () => {
-    await supertest(Router).post('/v1/work/create')
-      .send(JSON.stringify(myData))
-      .expect(200)
-      .then(async (response) => {
-        expect(response).toEqual('v1 work write endpoint functional.');
-      })
-
-  });
-});
-
