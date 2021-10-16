@@ -1,32 +1,20 @@
 const fs = require("fs");
-const filePath = './work.json'
+const filePath = "./work.json"
 
+// Receive JSON POST request and save it to a file
 exports.createOneRequest = (req, res) => {
-  const payload = JSON.stringify(req.body);
+  const payload = req.json;
 
-  res.format({
-    'text/plain': function () {
-      res.send('hey')
-    },
-
-    'text/html': function () {
-      res.send('<p>hey</p>')
-    },
-
-    'application/json': function () {
-      res.send({ message: 'hey' })
-    },
-
-    default: function () {
-      // log the request and respond with 406
-      res.status(406).send('Not Acceptable')
-    }
-  });
-
-  res.status(200).send({'messages':'v1 work write endpoint functional.'});
-  // fs.writeFileSync('work.json', payload);
+  try {
+    res.set('Content-Type', 'application/json')
+    res.status(200).send(payload);
+    // fs.writeFileSync(filePath, payload);
+  } catch (err) {
+    console.error(err);
+  }
 }
 
+// Receive query GET request and respond with JSON data
 exports.readAllRequest = (req, res) => {
   fs.readFile(filePath, 'utf8',
     (err, data) => {
