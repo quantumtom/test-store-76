@@ -21,5 +21,5 @@ exports.createOneRequest = (req, res) => {
 
   res.status(200).json(payload);
 
-  fs.writeFileSync(filePath, payload.data);
+  fs.writeFile(filePath, payload);
 };
