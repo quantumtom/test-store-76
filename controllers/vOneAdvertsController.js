@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path")
-const filePath = path.resolve(__dirname, "../work.test.json");
+const fileName = "work.test.json"
+const filePath = path.resolve(__dirname, "../" + fileName);
 
 // Receive query GET request and respond with JSON data
 exports.readAllRequest = (req, res) => {
@@ -17,9 +18,12 @@ exports.readAllRequest = (req, res) => {
 
 // Receive JSON POST request and save it to a file
 exports.createOneRequest = (req, res) => {
-  const payload = req.body;
+  const payload = JSON.stringify(req.body);
 
-  res.status(200).json(payload);
+  fs.writeFile(fileName, payload, (err, data) => {
+    if (err) console.error(err, data)
 
-  fs.writeFile(filePath, payload);
+    res.status(200).json(payload);
+  });
+
 };
