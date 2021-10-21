@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const cors = require('cors')
 
 const vOneAdvertsRouter = require('./routes/vOneAdvertsRoutes')
 const vOneShortsRouter = require('./routes/vOneShortsRoutes')
@@ -11,6 +12,9 @@ app.use(express.urlencoded(
   {
     extended: true
   }))
+
+app.use(cors())
+app.disable('x-powered-by')
 
 app.use('/v1/work/', vOneAdvertsRouter)
 app.use('/v1/shorts/', vOneShortsRouter)

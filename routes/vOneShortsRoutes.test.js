@@ -2,7 +2,7 @@ const Router = require("../Router");
 const supertest = require("supertest");
 const fs = require("fs");
 const path = require("path")
-const filePath = path.resolve(__dirname, "../shorts.test.json");
+const filePath = path.resolve(__dirname, "../shorts.json");
 
 let simulata = {};
 

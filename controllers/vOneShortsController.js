@@ -1,5 +1,5 @@
 const fs = require("fs");
-const filePath = "./shorts.test.json"
+const filePath = "./shorts.json"
 
 // Receive query GET request and respond with JSON data
 exports.readAllRequest = (req, res) => {
@@ -10,7 +10,7 @@ exports.readAllRequest = (req, res) => {
         return;
       }
 
-      res.status(302).json(data);
+      res.status(302).json(JSON.parse(data));
     });
 };
 
