@@ -2,29 +2,28 @@ const Router = require("../Router");
 const supertest = require("supertest");
 const fs = require("fs");
 const path = require("path")
-const filePath = path.resolve(__dirname, "../shorts.json");
+const filePath = path.resolve(__dirname, "../shorts.test.json");
 
 let simulata = {};
 
 (() => {
   fs.readFileSync(filePath, {encoding: "utf8"},
-    (err, store) => {
+    (err, fileData) => {
       if (err) {
         console.error(err);
         return err;
       }
 
-      simulata = JSON.parse(store);
+      simulata = JSON.parse(fileData);
     });
 })();
 
-describe("v1 work GET (read) endpoint", () => {
+describe("v1 shorts GET (read) endpoint", () => {
   it("should return status code 302", (done) => {
     supertest(Router)
       .get("/v1/shorts/")
       .set('Accept', 'application/json')
       .expect(302)
-      .expect('Content-Type', /json/)
       .end((err) => {
         if (err) {
           return done(err);
@@ -62,17 +61,13 @@ describe("v1 work GET (read) endpoint", () => {
   });
 });
 
-describe("v1 work POST (write) endpoint", () => {
+describe("v1 shorts POST (write) endpoint", () => {
   it(`should respond with status code 200.`, (done) => {
     supertest(Router)
       .post("/v1/shorts/create/")
       .set("Accept", "application/json")
-      .send(simulata)
+      .send(simulata.data)
       .expect(200)
-      .expect('Content-Type', /json/)
-      .expect((res) => {
-        expect(res.body.data).toStrictEqual(simulata.data);
-      })
       .end((err) => {
         if (err) {
           return done(err);
@@ -85,7 +80,7 @@ describe("v1 work POST (write) endpoint", () => {
     supertest(Router)
       .post("/v1/shorts/create/")
       .set("Accept", "application/json")
-      .send(simulata)
+      .send(simulata.data)
       .expect('Content-Type', /json/)
       .end((err) => {
         if (err) {
@@ -99,7 +94,7 @@ describe("v1 work POST (write) endpoint", () => {
     supertest(Router)
       .post("/v1/shorts/create/")
       .set("Accept", "application/json")
-      .send(simulata)
+      .send(simulata.data)
       .expect((res) => {
         expect(res.body.data).toStrictEqual(simulata.data);
       })

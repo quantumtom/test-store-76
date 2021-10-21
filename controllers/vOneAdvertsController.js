@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path")
-const filePath = path.resolve(__dirname, "../work.json");
+const filePath = path.resolve(__dirname, "../work.test.json");
 
 // Receive query GET request and respond with JSON data
 exports.readAllRequest = (req, res) => {
@@ -11,7 +11,7 @@ exports.readAllRequest = (req, res) => {
         return;
       }
 
-      res.status(302).json(JSON.parse(data));
+      res.status(302).json(data);
     });
 };
 
