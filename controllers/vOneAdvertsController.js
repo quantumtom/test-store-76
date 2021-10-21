@@ -4,7 +4,7 @@ const filePath = path.resolve(__dirname, "../work.test.json");
 
 // Receive query GET request and respond with JSON data
 exports.readAllRequest = (req, res) => {
-  fs.readFile(filePath, "utf8",
+  fs.readFile(filePath, {encoding: "utf8"},
     (err, data) => {
       if (err) {
         console.error(err);
@@ -12,19 +12,6 @@ exports.readAllRequest = (req, res) => {
       }
 
       res.status(302).json(data);
-    });
-};
-
-exports.readOneRequest = (req, res) => {
-  fs.readFile(path.resolve(__dirname, "../work.json"), "utf8",
-    (err, data) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-
-      res.status(302).json(data);
-
     });
 };
 
@@ -34,6 +21,5 @@ exports.createOneRequest = (req, res) => {
 
   res.status(200).json(payload);
 
-  // fs.writeFileSync(filePath, payload);
+  fs.writeFileSync(filePath, payload.data);
 };
-
