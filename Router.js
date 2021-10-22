@@ -1,16 +1,14 @@
 const express = require('express')
 const app = express()
-const bodyParser = require('body-parser')
-const SERVER_PORT = process.env.SERVER_PORT || '8080';
-const cors = require('cors');
+const cors = require('cors')
 
-const vOneShortsRouter = require('./routes/vOneShortsRoutes')
 const vOneAdvertsRouter = require('./routes/vOneAdvertsRoutes')
-const shortsRouter = require('./routes/shorts.routes')
+const vOneShortsRouter = require('./routes/vOneShortsRoutes')
 const advertsRouter = require('./routes/adverts.routes')
+const shortsRouter = require('./routes/shorts.routes')
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded(
+app.use(express.json())
+app.use(express.urlencoded(
   {
     extended: true
   }))
@@ -18,11 +16,9 @@ app.use(bodyParser.urlencoded(
 app.use(cors())
 app.disable('x-powered-by')
 
-app.use('/v1/shorts/', vOneShortsRouter)
 app.use('/v1/work/', vOneAdvertsRouter)
-app.use('/v2/shorts/', shortsRouter)
+app.use('/v1/shorts/', vOneShortsRouter)
 app.use('/v2/adverts/', advertsRouter)
+app.use('/v2/shorts/', shortsRouter)
 
-app.listen(SERVER_PORT,
-  () => console.log(`the router is alive on port:${SERVER_PORT}`)
-)
+module.exports = app;

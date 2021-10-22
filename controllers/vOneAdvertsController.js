@@ -1,22 +1,29 @@
 const fs = require("fs");
-const filePath = './work.json'
+const path = require("path")
+const fileName = "work.test.json"
+const filePath = path.resolve(__dirname, "../" + fileName);
 
-exports.createOneRequest = (req, res) => {
-  const payload = JSON.stringify(req.body);
-  res.status(200).send(`POST #1 works. 'req.body' is '${payload}.'`);
-  fs.writeFileSync('work.json', payload);
-}
-
+// Receive query GET request and respond with JSON data
 exports.readAllRequest = (req, res) => {
-  fs.readFile(filePath, 'utf8',
-    (err, data) => {
+  fs.readFile(filePath, {encoding: "utf8"},
+    (err, fileData) => {
       if (err) {
         console.error(err);
         return;
       }
 
-      const payload = JSON.parse(data);
-
-      res.status(302).send(payload);
+      res.status(302).json(fileData);
     });
+};
+
+// Receive JSON POST request and save it to a file
+exports.createOneRequest = (req, res) => {
+  const payload = JSON.stringify(req.body);
+
+  fs.writeFile(fileName, payload, (err, data) => {
+    if (err) console.error(err, data)
+
+    res.status(200).json(payload);
+  });
+
 };
