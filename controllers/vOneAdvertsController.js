@@ -6,13 +6,13 @@ const filePath = path.resolve(__dirname, "../" + fileName);
 // Receive query GET request and respond with JSON data
 exports.readAllRequest = (req, res) => {
   fs.readFile(filePath, {encoding: "utf8"},
-    (err, data) => {
+    (err, fileData) => {
       if (err) {
         console.error(err);
         return;
       }
 
-      res.status(302).json(data);
+      res.status(302).json(fileData);
     });
 };
 

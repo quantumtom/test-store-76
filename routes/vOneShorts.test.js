@@ -7,7 +7,7 @@ const filePath = path.resolve(__dirname, "../shorts.test.json");
 let simulata = {};
 
 (() => {
-  fs.readFileSync(filePath, {encoding: "utf8"},
+  fs.readFile(filePath, {encoding: "utf8"},
     (err, fileData) => {
       if (err) {
         console.error(err);
@@ -44,21 +44,6 @@ describe("v1 shorts GET (read) endpoint", () => {
         return done();
       })
   });
-
-  it("should return an exact copy of the data payload that was sent.", (done) => {
-    supertest(Router)
-      .get("/v1/shorts/")
-      .set('Accept', 'application/json')
-      .expect((res) => {
-        expect(res.body.data).toStrictEqual(simulata.data);
-      })
-      .end((err) => {
-        if (err) {
-          return done(err);
-        }
-        return done();
-      })
-  });
 });
 
 describe("v1 shorts POST (write) endpoint", () => {
@@ -66,7 +51,7 @@ describe("v1 shorts POST (write) endpoint", () => {
     supertest(Router)
       .post("/v1/shorts/create/")
       .set("Accept", "application/json")
-      .send(simulata.data)
+      .send(simulata)
       .expect(200)
       .end((err) => {
         if (err) {
@@ -80,7 +65,7 @@ describe("v1 shorts POST (write) endpoint", () => {
     supertest(Router)
       .post("/v1/shorts/create/")
       .set("Accept", "application/json")
-      .send(simulata.data)
+      .send(simulata)
       .expect('Content-Type', /json/)
       .end((err) => {
         if (err) {
@@ -94,9 +79,9 @@ describe("v1 shorts POST (write) endpoint", () => {
     supertest(Router)
       .post("/v1/shorts/create/")
       .set("Accept", "application/json")
-      .send(simulata.data)
+      .send(simulata)
       .expect((res) => {
-        expect(res.body.data).toStrictEqual(simulata.data);
+        expect(JSON.parse(res.body)).toStrictEqual(simulata);
       })
       .end((err) => {
         if (err) {
