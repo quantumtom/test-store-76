@@ -1,6 +1,3 @@
-const Router = require('./Router');
-const SERVER_PORT = process.env.SERVER_PORT || '8080';
+const Server = require('./Server');
 
-Router.listen(SERVER_PORT,
-  () => console.log(`the router is alive on port:${SERVER_PORT}`)
-)
+Server.start();

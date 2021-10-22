@@ -14,11 +14,13 @@ app.use(express.urlencoded(
   }))
 
 app.use(cors())
-app.disable('x-powered-by')
+app.options('*', cors())
 
 app.use('/v1/work/', vOneAdvertsRouter)
 app.use('/v1/shorts/', vOneShortsRouter)
 app.use('/v2/adverts/', advertsRouter)
 app.use('/v2/shorts/', shortsRouter)
+
+app.disable('x-powered-by')
 
 module.exports = app;
