@@ -14,7 +14,6 @@ app.use(express.urlencoded(
   }))
 
 app.use(cors())
-app.options('*', cors())
 
 app.use('/v1/work/', vOneAdvertsRouter)
 app.use('/v1/shorts/', vOneShortsRouter)
