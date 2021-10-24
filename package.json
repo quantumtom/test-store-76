@@ -17,7 +17,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:detect": "jest --detectOpenHandles",
-    "start": "node index.js"
+    "start": "node index.js",
+    "start:prod": "NODE_ENV=production node index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
