@@ -1,13 +1,13 @@
 {
   "name": "test-store-76",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "private": true,
   "license": "NO LICENSE",
   "author": "quantumtom",
   "homepage": ".",
   "engines": {
-    "node": "14.17.6",
-    "npm": "6.14.15"
+    "node": "16.12.0",
+    "npm": "8.1.1"
   },
   "description": "Minimalist HTTP CRUD service with ExpressJS.",
   "repository": "https://github.com/quantumtom/test-store-76",
