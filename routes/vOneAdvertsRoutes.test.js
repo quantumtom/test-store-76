@@ -18,10 +18,10 @@ let simulata = {};
     });
 })();
 
-describe("v1 work GET (read) endpoint", () => {
+describe("v1 adverts GET (read) endpoint", () => {
   it("should return status code 302", (done) => {
     supertest(Router)
-      .get("/v1/work/")
+      .get("/v1/adverts/")
       .set('Accept', 'application/json')
       .expect(302)
       .end((err) => {
@@ -34,7 +34,7 @@ describe("v1 work GET (read) endpoint", () => {
 
   it("should have its 'Content-Type' header set to 'json'.", (done) => {
     supertest(Router)
-      .get("/v1/work/")
+      .get("/v1/adverts/")
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .end((err) => {
@@ -46,10 +46,10 @@ describe("v1 work GET (read) endpoint", () => {
   });
 });
 
-describe("v1 work POST (write) endpoint", () => {
+describe("v1 adverts POST (write) endpoint", () => {
   it(`should respond with status code 200.`, (done) => {
     supertest(Router)
-      .post("/v1/work/create/")
+      .post("/v1/adverts/create/")
       .set("Accept", "application/json")
       .send(simulata)
       .expect(200)
@@ -63,7 +63,7 @@ describe("v1 work POST (write) endpoint", () => {
 
   it(`should have its 'Content-Type' header set to 'json'.`, (done) => {
     supertest(Router)
-      .post("/v1/work/create/")
+      .post("/v1/adverts/create/")
       .set("Accept", "application/json")
       .send(simulata)
       .expect('Content-Type', /json/)
@@ -77,7 +77,7 @@ describe("v1 work POST (write) endpoint", () => {
 
   it(`should return an exact copy of the data payload that was sent.`, (done) => {
     supertest(Router)
-      .post("/v1/work/create/")
+      .post("/v1/adverts/create/")
       .set("Accept", "application/json")
       .send(simulata)
       .expect((res) => {
