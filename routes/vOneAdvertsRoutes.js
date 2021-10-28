@@ -3,6 +3,6 @@ const vOneAdvertsRouter = express.Router()
 const vOneAdvertsController = require('../controllers/vOneAdvertsController')
 
 vOneAdvertsRouter.get('/', vOneAdvertsController.readAllRequest)
-vOneAdvertsRouter.post('/create/', vOneAdvertsController.createOneRequest)
+vOneAdvertsRouter.post('/', vOneAdvertsController.createOneRequest)
 
 module.exports = vOneAdvertsRouter

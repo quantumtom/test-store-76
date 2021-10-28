@@ -21,7 +21,7 @@ let simulata = {};
 describe("v1 shorts GET (read) endpoint", () => {
   it("should return status code 302", (done) => {
     supertest(Router)
-      .get("/v1/shorts/")
+      .get("/v1/shorts")
       .set('Accept', 'application/json')
       .expect(302)
       .end((err) => {
@@ -34,7 +34,7 @@ describe("v1 shorts GET (read) endpoint", () => {
 
   it("should have its 'Content-Type' header set to 'json'.", (done) => {
     supertest(Router)
-      .get("/v1/shorts/")
+      .get("/v1/shorts")
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .end((err) => {
@@ -49,7 +49,7 @@ describe("v1 shorts GET (read) endpoint", () => {
 describe("v1 shorts POST (write) endpoint", () => {
   it(`should respond with status code 200.`, (done) => {
     supertest(Router)
-      .post("/v1/shorts/create/")
+      .post("/v1/shorts")
       .set("Accept", "application/json")
       .send(simulata)
       .expect(200)
@@ -63,7 +63,7 @@ describe("v1 shorts POST (write) endpoint", () => {
 
   it(`should have its 'Content-Type' header set to 'json'.`, (done) => {
     supertest(Router)
-      .post("/v1/shorts/create/")
+      .post("/v1/shorts")
       .set("Accept", "application/json")
       .send(simulata)
       .expect('Content-Type', /json/)
@@ -77,7 +77,7 @@ describe("v1 shorts POST (write) endpoint", () => {
 
   it(`should return an exact copy of the data payload that was sent.`, (done) => {
     supertest(Router)
-      .post("/v1/shorts/create/")
+      .post("/v1/shorts")
       .set("Accept", "application/json")
       .send(simulata)
       .expect((res) => {
