@@ -3,6 +3,6 @@ const vOneShortsRouter = express.Router()
 const vOneShortsController = require('../controllers/vOneShortsController')
 
 vOneShortsRouter.get('/', vOneShortsController.readAllRequest)
-vOneShortsRouter.post('/create/', vOneShortsController.createOneRequest)
+vOneShortsRouter.post('/', vOneShortsController.createOneRequest)
 
 module.exports = vOneShortsRouter
