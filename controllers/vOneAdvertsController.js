@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path")
-const fileName = "work.test.json"
+const fileName = "vOne.work.json"
 const filePath = path.resolve(__dirname, "../" + fileName);
 
 // Receive query GET request and respond with JSON data

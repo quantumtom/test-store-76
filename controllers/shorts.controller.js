@@ -1,5 +1,5 @@
 const fs = require("fs");
-const filePath = './shorts.data.json'
+const filePath = './vTwo.shorts.json'
 
 exports.createOneRequest = (req, res) => {
   res.status(201).json({message: "New resource created!"});
