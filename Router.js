@@ -2,10 +2,10 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 
-const vOneAdvertsRoutes = require('./routes/vOneAdvertsRoutes')
-const vOneShortsRoutes = require('./routes/vOneShortsRoutes')
-const advertsRoutes = require('./routes/adverts.routes')
-const shortsRoutes = require('./routes/shorts.routes')
+const vOneAdvertsRoutes = require('./routes/vOne.adverts.routes')
+const vOneShortsRoutes = require('./routes/vOne.shorts.routes')
+const advertsRoutes = require('./routes/vTwo.adverts.routes')
+const shortsRoutes = require('./routes/vTwo.shorts.routes')
 
 app.use(express.json())
 app.use(express.urlencoded(

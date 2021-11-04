@@ -2,7 +2,7 @@ const Router = require('./../Router');
 const supertest = require('supertest');
 const fs = require("fs");
 const path = require("path")
-const filePath = path.resolve(__dirname, "../vOne.work.json");
+const filePath = path.resolve(__dirname, "../vTwo.Adverts.json");
 
 let simulata = {};
 
@@ -17,6 +17,21 @@ let simulata = {};
       simulata = JSON.parse(store);
     });
 })();
+
+describe('v2 adverts read list endpoint', () => {
+  it('should return status 302', (done) => {
+    supertest(Router)
+      .get('/v2/adverts/')
+      .set('Accept', 'application/json')
+      .expect(302)
+      .end((err) => {
+        if (err) {
+          return done(err);
+        }
+        return done();
+      })
+  })
+})
 
 describe('v2 adverts read one endpoint', () => {
   it('should return status 302', (done) => {
@@ -36,7 +51,6 @@ describe('v2 adverts read one endpoint', () => {
     supertest(Router)
       .get('/v2/adverts/1/')
       .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
       .end((err) => {
         if (err) {
           return done(err);

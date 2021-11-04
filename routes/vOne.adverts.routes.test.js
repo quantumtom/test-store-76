@@ -32,7 +32,7 @@ describe("v1 adverts GET (read) endpoint", () => {
       })
   });
 
-  it("should have its 'Content-Type' header set to 'json'.", (done) => {
+  it("should have its 'Content-Type' header set to 'application/json'.", (done) => {
     supertest(Router)
       .get("/v1/adverts/")
       .set('Accept', 'application/json')
