@@ -15,15 +15,14 @@
   "testEnvironment": "node",
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watch",
+    "test:watch": "jest --watchAll",
     "test:detect": "jest --detectOpenHandles",
     "start": "node index.js",
     "start:prod": "NODE_ENV=production node index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "isomorphic-fetch": "^3.0.0"
+    "express": "^4.17.1"
   },
   "devDependencies": {
     "jest": "^27.2.5",
