@@ -36,34 +36,31 @@ exports.readItemRequest = (req, res) => {
     });
 }
 
-// PUT
+// PUT /v2/adverts/:id
 exports.replaceItemRequest = (req, res) => {
   const itemID = req.params.id;
-  const payload = JSON.stringify(req.body);
+  const payload = req;
 
-    fs.readFile(filePath, 'utf8',
-    (err, dataFile) => {
-      if (err) {
-        console.error(err);
+  fs.readFile(filePath, 'utf8',
+  (err, oldDataFile) => {
+    if (err) {
+      res.status(404).send("File not found: " + itemID);
+      console.error(err);
+      return;
+    }
 
-        res.status(404).send("Item not found: " + itemID);
-        return;
-      }
+    oldDataFile[itemID.toString()] = payload;
 
-      dataFile[itemID] = payload;
-
-      fs.writeFile(filePath, payload, 'utf8',
-        (err, data) => {
+    fs.writeFile(filePath, oldDataFile, 'utf8',
+      (err, data) => {
         if (err) {
           console.error(err, data)
           return;
         }
 
-        res.status(201).send("Updated item: " + itemID);
+        res.status(200).json(req.body);
       });
-
-
-    });
+  });
 }
 
 // PATCH
