@@ -38,8 +38,7 @@ describe('v2 adverts read list endpoint', () => {
   })
 })
 
-describe('v2 adverts put (one) endpoint', () => {
-  const PUT_PATH = '/v2/adverts/1'
+describe('v2 adverts put endpoint', () => {
   const dataEdit = {
     "jobID": "9",
     "videoID": "117235079",
@@ -49,10 +48,24 @@ describe('v2 adverts put (one) endpoint', () => {
 
   it('should return status 200', (done) => {
     supertest(Router)
-      .put(PUT_PATH)
-      .set('Accept', 'application/json')
+      .put('/v2/adverts/1')
+      .set('Content-Type', 'application/json')
       .send(dataEdit)
       .expect(200)
+      .end((err) => {
+        if (err) {
+          return done(err);
+        }
+        return done();
+      })
+  })
+
+  it('should return status 201', (done) => {
+    supertest(Router)
+      .put('/v2/adverts/99')
+      .set('Content-Type', 'application/json')
+      .send(dataEdit)
+      .expect(201)
       .end((err) => {
         if (err) {
           return done(err);
