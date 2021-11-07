@@ -1,17 +1,18 @@
 const fs = require("fs");
 const path = require("path")
 const filePath = path.resolve(__dirname, "../vTwo.adverts.json");
+const fsOpts = {encoding: "utf8"};
 
 // GET (collection)
 exports.readListRequest = (req, res) => {
-  fs.readFile(filePath, {encoding: "utf8"},
-    (err, fileData) => {
+  fs.readFile(filePath, fsOpts,
+    (err, dataFile) => {
       if (err) {
         console.error(err);
         return;
       }
 
-      res.status(302).send(JSON.parse(fileData));
+      res.status(302).send(JSON.parse(dataFile));
     });
 };
 
@@ -29,7 +30,7 @@ exports.createListRequest = (req, res) => {
 exports.readItemRequest = (req, res) => {
   const itemID = req.params.id;
 
-  fs.readFile(filePath, {encoding: "utf8"},
+  fs.readFile(filePath, fsOpts,
     (err, dataFile) => {
       if (err) {
         console.error(err);
@@ -62,7 +63,7 @@ exports.replaceItemRequest = (req, res) => {
     return;
   }
 
-  fs.readFile(filePath, {encoding: "utf8"},
+  fs.readFile(filePath, fsOpts,
   (err, dataFile) => {
     if (err) {
       console.error(err);
@@ -85,14 +86,14 @@ exports.replaceItemRequest = (req, res) => {
 
     dataFile = JSON.stringify(dataFile);
 
-    fs.writeFile(filePath, dataFile, {encoding: "utf8"},
+    fs.writeFile(filePath, dataFile, fsOpts,
       (err, data) => {
         if (err) {
           console.error(err, data)
           return;
         }
 
-        res.status(statusCode).json(JSON.parse(dataFile));
+        res.status(statusCode).json(dataFile);
       });
   });
 }
@@ -115,7 +116,7 @@ exports.deleteItemRequest = (req, res) => {
     return;
   }
 
-  fs.readFile(filePath, {encoding: "utf8"},
+  fs.readFile(filePath, fsOpts,
     (err, dataFile) => {
       if (err) {
         console.error(err);
@@ -126,26 +127,23 @@ exports.deleteItemRequest = (req, res) => {
 
       if (!!dataFile[itemID]) {
         statusCode = 200;
+        console.log('removing ' + dataFile[itemID]);
+        delete dataFile[itemID];
       } else {
         statusCode = 404;
-      }
-
-      try {
-        delete dataFile[itemID];
-      } catch (err) {
-        console.error(err);
+        console.log('itemID ' + itemID + ' not found.');
       }
 
       dataFile = JSON.stringify(dataFile);
 
-      fs.writeFile(filePath, dataFile, {encoding: "utf8"},
+      fs.writeFile(filePath, dataFile, fsOpts,
         (err, data) => {
           if (err) {
             console.error(err, data)
             return;
           }
 
-          res.status(statusCode).json(JSON.parse(dataFile));
+          res.status(statusCode).json(dataFile);
         });
     });
 }
