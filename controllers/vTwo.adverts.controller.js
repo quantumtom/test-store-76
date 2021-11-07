@@ -16,7 +16,13 @@ exports.readListRequest = (req, res) => {
 };
 
 exports.createListRequest = (req, res) => {
-  res.status(201).json({message: "New resource created!"});
+  const payload = JSON.stringify(req.body);
+
+  fs.writeFile(filePath, payload, (err, data) => {
+    if (err) console.error(err, data)
+
+    res.status(201).json({message: "New resource created!"});
+  });
 }
 
 // GET (single item)
@@ -24,15 +30,19 @@ exports.readItemRequest = (req, res) => {
   const itemID = req.params.id;
 
   fs.readFile(filePath, {encoding: "utf8"},
-    (err, data) => {
+    (err, dataFile) => {
       if (err) {
         console.error(err);
         return;
       }
 
-      let payload = JSON.parse(data);
+      dataFile = JSON.parse(dataFile);
 
-      res.status(302).send(payload[itemID]);
+      if (!dataFile[itemID]) {
+        res.status(404)
+      } else {
+        res.status(200).json(dataFile[itemID]);
+      }
     });
 }
 
@@ -53,36 +63,36 @@ exports.replaceItemRequest = (req, res) => {
   }
 
   fs.readFile(filePath, {encoding: "utf8"},
-  (err, oldDataFile) => {
+  (err, dataFile) => {
     if (err) {
       console.error(err);
       return;
     }
 
-    oldDataFile = JSON.parse(oldDataFile);
+    dataFile = JSON.parse(dataFile);
 
-    if (!!oldDataFile[itemID]) {
+    if (!!dataFile[itemID]) {
       statusCode = 200;
     } else {
       statusCode = 201;
     }
 
     try {
-      oldDataFile[itemID] = payload;
+      dataFile[itemID] = payload;
     } catch (err) {
       console.error(err);
     }
 
-    oldDataFile = JSON.stringify(oldDataFile);
+    dataFile = JSON.stringify(dataFile);
 
-    fs.writeFile(filePath, oldDataFile, {encoding: "utf8"},
+    fs.writeFile(filePath, dataFile, {encoding: "utf8"},
       (err, data) => {
         if (err) {
           console.error(err, data)
           return;
         }
 
-        res.status(statusCode).json(JSON.parse(oldDataFile));
+        res.status(statusCode).json(JSON.parse(dataFile));
       });
   });
 }
@@ -98,7 +108,6 @@ exports.updateItemRequest = (req, res) => {
 exports.deleteItemRequest = (req, res) => {
 
   const itemID = req.params.id;
-  const payload = req.body;
   let statusCode = 405;
 
   if (!itemID) {
@@ -107,36 +116,36 @@ exports.deleteItemRequest = (req, res) => {
   }
 
   fs.readFile(filePath, {encoding: "utf8"},
-    (err, oldDataFile) => {
+    (err, dataFile) => {
       if (err) {
         console.error(err);
         return;
       }
 
-      oldDataFile = JSON.parse(oldDataFile);
+      dataFile = JSON.parse(dataFile);
 
-      if (!!oldDataFile[itemID]) {
+      if (!!dataFile[itemID]) {
         statusCode = 200;
       } else {
         statusCode = 404;
       }
 
       try {
-        delete oldDataFile[itemID];
+        delete dataFile[itemID];
       } catch (err) {
         console.error(err);
       }
 
-      oldDataFile = JSON.stringify(oldDataFile);
+      dataFile = JSON.stringify(dataFile);
 
-      fs.writeFile(filePath, oldDataFile, {encoding: "utf8"},
+      fs.writeFile(filePath, dataFile, {encoding: "utf8"},
         (err, data) => {
           if (err) {
             console.error(err, data)
             return;
           }
 
-          res.status(statusCode).json(JSON.parse(oldDataFile));
+          res.status(statusCode).json(JSON.parse(dataFile));
         });
     });
 }
