@@ -3,7 +3,7 @@ const path = require("path")
 const filePath = path.resolve(__dirname, "../vTwo.adverts.json");
 const fsOpts = {encoding: "utf8"};
 
-// GET (collection)
+// GET /v2/adverts (collection)
 exports.readListRequest = (req, res) => {
   fs.readFile(filePath, fsOpts,
     (err, dataFile) => {
@@ -16,17 +16,20 @@ exports.readListRequest = (req, res) => {
     });
 };
 
+// POST /v2/adverts (collection)
 exports.createListRequest = (req, res) => {
   const payload = JSON.stringify(req.body);
+
+  console.dir(payload);
 
   fs.writeFile(filePath, payload, (err, data) => {
     if (err) console.error(err, data)
 
-    res.status(201).json({message: "New resource created!"});
+    res.status(201).json(req.body);
   });
 }
 
-// GET (single item)
+// GET /v2/adverts/:id (item)
 exports.readItemRequest = (req, res) => {
   const itemID = req.params.id;
 
@@ -47,7 +50,7 @@ exports.readItemRequest = (req, res) => {
     });
 }
 
-// PUT /v2/adverts/:id
+// PUT /v2/adverts/:id (item)
 exports.replaceItemRequest = (req, res) => {
   const itemID = req.params.id;
   const payload = req.body;
@@ -98,14 +101,14 @@ exports.replaceItemRequest = (req, res) => {
   });
 }
 
-// PATCH
+// PATCH /v2/adverts/:id (item)
 exports.updateItemRequest = (req, res) => {
   const itemID = req.params.id;
 
   res.status(201).send("Updated resource: " + itemID);
 }
 
-// DELETE
+// DELETE (item)
 exports.deleteItemRequest = (req, res) => {
 
   const itemID = req.params.id;
