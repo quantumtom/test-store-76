@@ -7,4 +7,3 @@ exports.start = () => {
     () => console.log(`the router is alive on port:${SERVER_PORT}`)
   )
 }
-

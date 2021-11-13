@@ -2,7 +2,7 @@ const Router = require("../Router");
 const supertest = require("supertest");
 const fs = require("fs");
 const path = require("path")
-const filePath = path.resolve(__dirname, "../vOne.work.json");
+const filePath = path.resolve(__dirname, "../vOne.shorts.json");
 
 let simulata = {};
 
@@ -18,12 +18,12 @@ let simulata = {};
     });
 })();
 
-describe("v1 adverts GET (read) endpoint", () => {
-  it("should return status code 302", (done) => {
+describe("v1 shorts GET (read) endpoint", () => {
+  it("should return status code 200", (done) => {
     supertest(Router)
-      .get("/v1/adverts/")
+      .get("/v1/shorts")
       .set('Accept', 'application/json')
-      .expect(302)
+      .expect(200)
       .end((err) => {
         if (err) {
           return done(err);
@@ -34,7 +34,7 @@ describe("v1 adverts GET (read) endpoint", () => {
 
   it("should have its 'Content-Type' header set to 'json'.", (done) => {
     supertest(Router)
-      .get("/v1/adverts/")
+      .get("/v1/shorts")
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .end((err) => {
@@ -46,10 +46,10 @@ describe("v1 adverts GET (read) endpoint", () => {
   });
 });
 
-describe("v1 adverts POST (write) endpoint", () => {
+describe("v1 shorts POST (write) endpoint", () => {
   it(`should respond with status code 200.`, (done) => {
     supertest(Router)
-      .post("/v1/adverts/")
+      .post("/v1/shorts")
       .set("Accept", "application/json")
       .send(simulata)
       .expect(200)
@@ -63,7 +63,7 @@ describe("v1 adverts POST (write) endpoint", () => {
 
   it(`should have its 'Content-Type' header set to 'json'.`, (done) => {
     supertest(Router)
-      .post("/v1/adverts/")
+      .post("/v1/shorts")
       .set("Accept", "application/json")
       .send(simulata)
       .expect('Content-Type', /json/)
@@ -77,7 +77,7 @@ describe("v1 adverts POST (write) endpoint", () => {
 
   it(`should return an exact copy of the data payload that was sent.`, (done) => {
     supertest(Router)
-      .post("/v1/adverts")
+      .post("/v1/shorts")
       .set("Accept", "application/json")
       .send(simulata)
       .expect((res) => {

@@ -1,13 +1,13 @@
 {
   "name": "test-store-76",
-  "version": "1.4.1",
+  "version": "2.0.0",
   "private": true,
   "license": "NO LICENSE",
   "author": "quantumtom",
   "homepage": ".",
   "engines": {
-    "node": "16.12.0",
-    "npm": "8.1.1"
+    "node": "16.13.0",
+    "npm": "8.1.3"
   },
   "description": "Minimalist HTTP CRUD service with ExpressJS.",
   "repository": "https://github.com/quantumtom/test-store-76",
@@ -15,15 +15,15 @@
   "testEnvironment": "node",
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watch",
+    "test:watch": "jest --watchAll",
     "test:detect": "jest --detectOpenHandles",
     "start": "node index.js",
     "start:prod": "NODE_ENV=production node index.js"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "isomorphic-fetch": "^3.0.0"
+    "express": "^4.17.1"
   },
   "devDependencies": {
     "jest": "^27.2.5",

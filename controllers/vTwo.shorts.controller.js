@@ -17,12 +17,12 @@ exports.readOneRequest = (req, res) => {
 
       let payload = JSON.parse(data);
 
-      res.status(302).send(payload[itemID]);
+      res.status(200).send(payload[itemID]);
     });
 }
 
 exports.updateOneRequest = (req, res) => {
-  res.status(301).json({message: "Resource updated!"});
+  res.status(201).json({message: "Resource updated!"});
 }
 
 exports.deleteOneRequest = (req, res) => {
@@ -38,6 +38,6 @@ exports.readAllRequest = (req, res) => {
       }
       const payload = JSON.parse(data);
 
-      res.status(302).send(payload);
+      res.status(200).send(payload);
     });
 };
