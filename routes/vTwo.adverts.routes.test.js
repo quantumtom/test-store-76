@@ -24,11 +24,11 @@ let simulata = {};
 
 describe('v2 adverts read list endpoint', () => {
   const PATH = '/v2/adverts'
-  it('should return status 302', (done) => {
+  it('should return status 200', (done) => {
     supertest(Router)
       .get(PATH)
       .set('Accept', 'application/json')
-      .expect(302)
+      .expect(200)
       .end((err) => {
         if (err) {
           return done(err);
@@ -76,11 +76,11 @@ describe('v2 adverts put endpoint', () => {
 })
 
 describe('v2 adverts read one endpoint', () => {
-  it('should return status 302', (done) => {
+  it('should return status 200', (done) => {
     supertest(Router)
       .get('/v2/adverts/1')
       .set('Accept', 'application/json')
-      .expect(302)
+      .expect(200)
       .end((err) => {
         if (err) {
           return done(err);

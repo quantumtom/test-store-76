@@ -12,7 +12,7 @@ exports.readListRequest = (req, res) => {
         return;
       }
 
-      res.status(302).send(JSON.parse(dataFile));
+      res.status(200).send(JSON.parse(dataFile));
     });
 };
 

@@ -19,11 +19,11 @@ let simulata = {};
 })();
 
 describe("v1 shorts GET (read) endpoint", () => {
-  it("should return status code 302", (done) => {
+  it("should return status code 200", (done) => {
     supertest(Router)
       .get("/v1/shorts")
       .set('Accept', 'application/json')
-      .expect(302)
+      .expect(200)
       .end((err) => {
         if (err) {
           return done(err);

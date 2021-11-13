@@ -12,7 +12,7 @@ exports.readAllRequest = (req, res) => {
         return;
       }
 
-      res.status(302).json(fileData);
+      res.status(200).json(fileData);
     });
 };
 
