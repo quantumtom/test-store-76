@@ -20,8 +20,6 @@ exports.readListRequest = (req, res) => {
 exports.createListRequest = (req, res) => {
   const payload = JSON.stringify(req.body);
 
-  console.dir(payload);
-
   fs.writeFile(filePath, payload, (err, data) => {
     if (err) console.error(err, data)
 
@@ -130,7 +128,7 @@ exports.deleteItemRequest = (req, res) => {
 
       if (!!dataFile[itemID]) {
         statusCode = 200;
-        console.log('removing ' + dataFile[itemID]);
+        console.log(`removing ${itemID} from dataFile`);
         delete dataFile[itemID];
       } else {
         statusCode = 404;
