@@ -2,7 +2,7 @@
 
 # This is the second half of a two-part web app.
 
-According to the description I wrote for the npm package, this is a "Minimalist HTTP CRUD service with ExpressJS."
+According to the description I wrote for the npm package, this is a "Minimalist HTTP CRUD(-esque) API service implemented with ExpressJS."
 
 It has since grown to include an asynchronous endpoint testing suite.
 
