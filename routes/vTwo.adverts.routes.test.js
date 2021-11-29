@@ -2,8 +2,8 @@ const Router = require('./../Router');
 const supertest = require('supertest');
 const fs = require("fs");
 const path = require("path")
-const filePath = path.resolve(__dirname, "../vTwo.Adverts.json");
-const testFilePath = path.resolve(__dirname, "../adverts.routes.test.data.json");
+const filePath = path.resolve(__dirname, "../vTwo.shorts.json");
+const testFilePath = path.resolve(__dirname, "../shorts.routes.test.data.json");
 
 fs.copyFile(filePath, testFilePath, (err) => {
   if (err) {
@@ -46,12 +46,12 @@ describe('v2 adverts put endpoint', () => {
     "description": "Record  (4th Unit Photography)"
   };
 
-  it('should return status 200', (done) => {
+  it('should return status 200 or 201', (done) => {
     supertest(Router)
       .put('/v2/adverts/1')
       .set('Content-Type', 'application/json')
       .send(dataEdit)
-      .expect(200)
+      .expect(200 || 201)
       .end((err) => {
         if (err) {
           return done(err);
@@ -65,7 +65,7 @@ describe('v2 adverts put endpoint', () => {
       .put('/v2/adverts/99')
       .set('Content-Type', 'application/json')
       .send(dataEdit)
-      .expect(200 || 201)
+      .expect(201)
       .end((err) => {
         if (err) {
           return done(err);
