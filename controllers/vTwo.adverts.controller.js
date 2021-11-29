@@ -55,12 +55,12 @@ exports.replaceItemRequest = (req, res) => {
   let statusCode = 204;
 
   if (!itemID) {
-    res.status(statusCode).send("No record id.");
+    res.status(400).send("No record id.");
     return;
   }
 
   if (!payload) {
-    res.status(statusCode).send("No content.");
+    res.status(400).send("No content.");
     return;
   }
 
@@ -73,7 +73,7 @@ exports.replaceItemRequest = (req, res) => {
 
     dataFile = JSON.parse(dataFile);
 
-    if (!!dataFile[itemID]) {
+    if (!!dataFile.clips[itemID]) {
       statusCode = 200;
     } else {
       statusCode = 201;
