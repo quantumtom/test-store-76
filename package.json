@@ -9,6 +9,9 @@
   "repository": "https://github.com/quantumtom/test-store-76",
   "main": "index.js",
   "testEnvironment": "node",
+  "jest": {
+    "testTimeout": 3000
+  },
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watchAll",
