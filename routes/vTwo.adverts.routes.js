@@ -3,11 +3,12 @@ const advertsRouter = express.Router()
 const advertsController = require("../controllers/vTwo.adverts.controller")
 
 advertsRouter.get('/', advertsController.readListRequest)
-advertsRouter.post('/', advertsController.createListRequest)
+advertsRouter.get('/:guid', advertsController.readItemRequest)
 
-advertsRouter.get('/:id', advertsController.readItemRequest)
-advertsRouter.put('/:id', advertsController.replaceItemRequest)
-advertsRouter.patch('/:id', advertsController.updateItemRequest)
-advertsRouter.delete('/:id', advertsController.deleteItemRequest)
+advertsRouter.post('/', advertsController.createListRequest)
+advertsRouter.post('/clips', advertsController.addItemRequest)
+
+advertsRouter.put('/clips/:guid', advertsController.replaceItemRequest)
+advertsRouter.delete('/clips/:guid', advertsController.deleteItemRequest)
 
 module.exports = advertsRouter
