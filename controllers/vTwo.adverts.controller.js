@@ -71,13 +71,13 @@ exports.addItemRequest = (req, res) => {
     });
 }
 
-// PUT /v2/adverts/clip/:id (item)
+// PUT /v2/adverts/clip/:guid (item)
   exports.replaceItemRequest = (req, res) => {
-    const itemIndex = req.params.index;
-    const payload = req.body;
+    const itemID = req.params.guid;
+    let payload = req.body;
     let statusCode = 204;
 
-    if (!itemIndex) {
+    if (!itemID) {
       statusCode = 400;
       res.status(statusCode).send("No record id.");
       return;
@@ -97,18 +97,26 @@ exports.addItemRequest = (req, res) => {
 
       dataFile = JSON.parse(dataFile);
 
-      if (!!dataFile.clips[itemID]) {
-        // Item already exists
-        statusCode = 200;
-      } else {
-        // Item was created
-        statusCode = 201;
-      }
+      const itemIndex = dataFile.clips.findIndex((item) => {
+        return item.guid === itemID;
+      });
 
-      try {
-        dataFile.clips[itemID] = payload;
-      } catch (err) {
-        console.error(err);
+      // TODO: Add deep (recursive) copying of the object
+      //  so as not to overwrite any unassigned property data.
+
+      payload["guid"]  = itemID;
+
+      // Item locator found nothing.
+      if (itemIndex < 0) {
+        payload["guid"]  = itemID;
+        //  Add item as a new entry.
+        dataFile.clips.push(payload);
+        statusCode = 201;
+      // Item locator found an entry.
+      } else {
+        //  Modify the entry.
+        dataFile.clips[itemIndex] = payload;
+        statusCode = 200;
       }
 
       dataFile = JSON.stringify(dataFile);
@@ -120,7 +128,7 @@ exports.addItemRequest = (req, res) => {
             return;
           }
 
-          res.status(statusCode).json(dataFile);
+          res.status(statusCode).send(dataFile);
         });
     });
 }
@@ -143,9 +151,6 @@ exports.deleteItemRequest = (req, res) => {
       const itemIndex = dataFile.clips.findIndex((item) => {
         return item.guid === itemID;
       });
-
-      console.log(`itemIndex is '${itemIndex}'.`);
-      console.dir(itemIndex);
 
       if (!itemIndex) {
         console.log('itemID ' + itemID + ' not found.');
