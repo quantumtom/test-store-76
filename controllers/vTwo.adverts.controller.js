@@ -16,9 +16,9 @@ exports.readListRequest = (req, res) => {
     });
 };
 
-// GET /v2/adverts/:index (item)
+// GET /v2/adverts/clips/:guid (item)
 exports.readItemRequest = (req, res) => {
-  const itemIndex = req.params.index;
+  const itemID = req.params.guid;
 
   fs.readFile(filePath, fsOpts,
     (err, dataFile) => {
@@ -29,7 +29,11 @@ exports.readItemRequest = (req, res) => {
 
       dataFile = JSON.parse(dataFile);
 
-      if (!dataFile.clips[itemIndex]) {
+      const itemIndex = dataFile.clips.findIndex((item) => {
+        return item.guid === itemID;
+      });
+
+      if (itemIndex < 0) {
         res.status(404)
       } else {
         res.status(200).json(dataFile.clips[itemIndex]);
