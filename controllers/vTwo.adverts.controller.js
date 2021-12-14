@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path")
 const filePath = path.resolve(__dirname, "../vTwo.adverts.json");
 const fsOpts = {encoding: "utf8"};
+const { v4: uuidv4 } = require("uuid");
 
 // GET /v2/adverts (collection)
 exports.readListRequest = (req, res) => {
@@ -52,8 +53,10 @@ exports.createListRequest = (req, res) => {
   });
 }
 
-// POST /v2/adverts/clips (item)
+// POST and PUT /v2/adverts/clips (item)
 exports.addItemRequest = (req, res) => {
+  let payload = req.body;
+
   fs.readFile(filePath, fsOpts,
     (err, dataFile) => {
       if (err) {
@@ -61,21 +64,18 @@ exports.addItemRequest = (req, res) => {
         return;
       }
 
-      // TODO: Generate guid and attach it to the
-      //  payload before adding the new record
-
-      // TODO: Block payloads with guids
+      payload.guid = uuidv4();
 
       dataFile = JSON.parse(dataFile);
 
-      dataFile.clips.push(req.body)
+      dataFile.clips.push(payload)
 
       dataFile = JSON.stringify(dataFile);
 
       fs.writeFile(filePath, dataFile, (err, data) => {
         if (err) console.error(err, data)
 
-        res.status(201).send(dataFile);
+        res.status(201).json(payload);
       });
     });
 }
@@ -122,6 +122,7 @@ exports.addItemRequest = (req, res) => {
       } else {
         // Item locator found an entry.
         //  Modify the entry.
+        payload.guid = uuidv4();
         dataFile.clips[itemIndex] = payload;
         statusCode = 200;
       }
