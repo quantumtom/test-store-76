@@ -61,6 +61,11 @@ exports.addItemRequest = (req, res) => {
         return;
       }
 
+      // TODO: Generate guid and attach it to the
+      //  payload before adding the new record
+
+      // TODO: Block payloads with guids
+
       dataFile = JSON.parse(dataFile);
 
       dataFile.clips.push(req.body)
@@ -75,7 +80,7 @@ exports.addItemRequest = (req, res) => {
     });
 }
 
-// PUT /v2/adverts/clip/:guid (item)
+// PUT /v2/adverts/clips/:guid (item)
   exports.replaceItemRequest = (req, res) => {
     const itemID = req.params.guid;
     let payload = req.body;
@@ -108,16 +113,14 @@ exports.addItemRequest = (req, res) => {
       // TODO: Add deep (recursive) copying of the object
       //  so as not to overwrite any unassigned property data.
 
-      payload["guid"]  = itemID;
-
       // Item locator found nothing.
       if (itemIndex < 0) {
-        payload["guid"]  = itemID;
         //  Add item as a new entry.
+        payload.guid  = itemID;
         dataFile.clips.push(payload);
         statusCode = 201;
-      // Item locator found an entry.
       } else {
+        // Item locator found an entry.
         //  Modify the entry.
         dataFile.clips[itemIndex] = payload;
         statusCode = 200;
@@ -156,11 +159,11 @@ exports.deleteItemRequest = (req, res) => {
         return item.guid === itemID;
       });
 
-      if (!itemIndex) {
-        console.log('itemID ' + itemID + ' not found.');
+      if (itemIndex < 0) {
+        // console.log('itemID ' + itemID + ' not found.');
         res.status(404).send('itemID ' + itemID + ' not found.');
       } else {
-        console.log(`removing '${itemID}' from dataFile`);
+        // console.log(`removing '${itemID}' from dataFile`);
         statusCode = 202;
         dataFile.clips.splice(itemIndex, 1);
         saveChanges(dataFile);
