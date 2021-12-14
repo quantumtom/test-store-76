@@ -2,12 +2,15 @@ const Router = require('./../Router');
 const supertest = require('supertest');
 const fs = require("fs");
 const path = require("path")
+const { v4: uuidv4 } = require("uuid");
+
 const filePath = path.resolve(__dirname, "../vTwo.adverts.json");
 const testFilePath = path.resolve(__dirname, "../adverts.routes.test.data.json");
 
 let simulata = {};
 
 let testItem = {
+  "guid": uuidv4(),
   "videoID": "999999999",
   "title": "***TEST_TITLE***",
   "description": "***TEST_DESCRIPTION***"
@@ -89,9 +92,42 @@ describe('v2 adverts POST endpoint', () => {
 })
 
 describe('v2 adverts clips PUT/DELETE endpoints', () =>  {
+  let payloadID = '';
+
   it('should return status 201', (done) => {
     supertest(Router)
-      .put('/v2/adverts/clips/999999999')
+      .put('/v2/adverts/clips')
+      .set('Content-Type', 'application/json')
+      .send(testItem)
+      .expect(201)
+      .expect((res) => {
+        payloadID = res.body.guid;
+        console.log(res.body);
+      })
+      .end((err) => {
+        if (err) {
+          return done(err);
+        }
+        return done();
+      })
+  })
+
+  it('should return status 202', (done) => {
+    supertest(Router)
+      .delete('/v2/adverts/clips/' + payloadID)
+      .set('Accept', 'application/json')
+      .expect(202)
+      .end((err) => {
+        if (err) {
+          return done(err);
+        }
+        return done();
+      })
+  })
+
+  it('should return status 201', (done) => {
+    supertest(Router)
+      .put('/v2/adverts/clips/555')
       .set('Content-Type', 'application/json')
       .send(testItem)
       .expect(201)
@@ -105,7 +141,7 @@ describe('v2 adverts clips PUT/DELETE endpoints', () =>  {
 
   it('should return status 202', (done) => {
     supertest(Router)
-      .delete('/v2/adverts/clips/999999999')
+      .delete('/v2/adverts/clips/555')
       .set('Accept', 'application/json')
       .expect(202)
       .end((err) => {
