@@ -102,7 +102,6 @@ describe('v2 adverts clips PUT/DELETE endpoints', () =>  {
       .expect(201)
       .expect((res) => {
         payloadID = res.body.guid;
-        console.log(res.body);
       })
       .end((err) => {
         if (err) {
