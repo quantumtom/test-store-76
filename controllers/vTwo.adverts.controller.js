@@ -53,7 +53,7 @@ exports.createListRequest = (req, res) => {
   });
 }
 
-// POST and PUT /v2/adverts/clips (item)
+// POST and PUT /v2/adverts/clips (item without record locator)
 exports.addItemRequest = (req, res) => {
   let payload = req.body;
 
