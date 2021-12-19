@@ -110,8 +110,8 @@ exports.addItemRequest = (req, res) => {
         return item.guid === itemID;
       });
 
-      // TODO: Add deep (recursive) copying of the object
-      //  so as not to overwrite any unassigned property data.
+      // TODO: Implement deep copy of the object
+      //  so as not to overwrite any extant object values.
 
       // Item locator found nothing.
       if (itemIndex < 0) {
@@ -143,9 +143,7 @@ exports.addItemRequest = (req, res) => {
 
 // DELETE /v2/adverts/clips/:guid (item)
 exports.deleteItemRequest = (req, res) => {
-
   const itemID = req.params.guid;
-  let statusCode = 405;
 
   fs.readFile(filePath, fsOpts,
     (err, dataFile) => {
@@ -163,17 +161,17 @@ exports.deleteItemRequest = (req, res) => {
       if (itemIndex < 0) {
         // console.log('itemID ' + itemID + ' not found.');
         res.status(404).send('itemID ' + itemID + ' not found.');
-      } else {
-        // console.log(`removing '${itemID}' from dataFile`);
-        statusCode = 202;
-        dataFile.clips.splice(itemIndex, 1);
-        saveChanges(dataFile);
-        res.status(202).send(`Deleted itemID '${itemID}'!`);
+        return;
       }
-    });
+
+      // console.log(`removing '${itemID}' from dataFile`);
+      dataFile.clips.splice(itemIndex, 1);
+      saveChanges(dataFile);
+      res.status(202).send(`Deleted itemID '${itemID}'!`);
+    })
 }
 
-function saveChanges (dataFile) {
+const saveChanges = (dataFile) => {
   fs.writeFile(filePath, JSON.stringify(dataFile), fsOpts,
     (err, data) => {
       if (err) {
