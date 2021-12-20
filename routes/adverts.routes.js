@@ -1,6 +1,6 @@
 const express = require('express')
 const advertsRouter = express.Router()
-const advertsController = require("../controllers/vTwo.adverts.controller")
+const advertsController = require("../controllers/adverts.controller")
 
 advertsRouter.get('/', advertsController.readListRequest)
 advertsRouter.post('/', advertsController.createListRequest)

@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path")
-const filePath = path.resolve(__dirname, "../vTwo.adverts.json");
+const filePath = path.resolve(__dirname, "../adverts.json");
 const fsOpts = {encoding: "utf8"};
 const { v4: uuidv4 } = require("uuid");
 

@@ -2,8 +2,8 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 
-const advertsRoutes = require('./routes/vTwo.adverts.routes')
-const shortsRoutes = require('./routes/vTwo.shorts.routes')
+const advertsRoutes = require('./routes/adverts.routes')
+const shortsRoutes = require('./routes/shorts.routes')
 
 app.use(cors())
 app.options('*', cors())
