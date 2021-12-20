@@ -32,7 +32,7 @@ fs.copyFile(filePath, testFilePath, (err) => {
     });
 });
 
-describe('v2 adverts GET endpoint', () => {
+describe('Adverts collection GET endpoint', () => {
   it('should return status 200', (done) => {
     supertest(Router)
       .get('/v2/adverts')
@@ -75,7 +75,7 @@ describe('v2 adverts GET endpoint', () => {
   });
 })
 
-describe('v2 adverts POST endpoint', () => {
+describe('Adverts item POST endpoint', () => {
   it('should return status 201', (done) => {
     supertest(Router)
       .post('/v2/adverts/clips')
@@ -91,7 +91,7 @@ describe('v2 adverts POST endpoint', () => {
   })
 })
 
-describe('v2 adverts clips PUT/DELETE endpoints', () =>  {
+describe('v2 adverts item PUT/DELETE endpoints', () =>  {
   let payloadID = '';
 
   it('should return status 201', (done) => {
