@@ -4,8 +4,8 @@ const fs = require("fs");
 const path = require("path")
 const { v4: uuidv4 } = require("uuid");
 
-const filePath = path.resolve(__dirname, "../vTwo.adverts.json");
-const testFilePath = path.resolve(__dirname, "../adverts.routes.test.data.json");
+const filePath = path.resolve(__dirname, "../data/adverts.json");
+const testFilePath = path.resolve(__dirname, "../data/adverts.routes.test.data.json");
 
 let simulata = {};
 
@@ -32,7 +32,7 @@ fs.copyFile(filePath, testFilePath, (err) => {
     });
 });
 
-describe('v2 adverts GET endpoint', () => {
+describe('Adverts collection GET endpoint', () => {
   it('should return status 200', (done) => {
     supertest(Router)
       .get('/v2/adverts')
@@ -75,7 +75,7 @@ describe('v2 adverts GET endpoint', () => {
   });
 })
 
-describe('v2 adverts POST endpoint', () => {
+describe('Adverts item POST endpoint', () => {
   it('should return status 201', (done) => {
     supertest(Router)
       .post('/v2/adverts/clips')
@@ -91,7 +91,7 @@ describe('v2 adverts POST endpoint', () => {
   })
 })
 
-describe('v2 adverts clips PUT/DELETE endpoints', () =>  {
+describe('v2 adverts item PUT/DELETE endpoints', () =>  {
   let payloadID = '';
 
   it('should return status 201', (done) => {
