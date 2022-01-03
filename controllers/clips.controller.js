@@ -31,7 +31,12 @@ exports.readItemRequest = (req, res) => {
 
 // POST and PUT /v2/adverts/clips (item without record locator)
 exports.addItemRequest = (req, res) => {
-  let payload = req.body;
+  let payload = {};
+
+  payload.title = req.body.title;
+  payload.description = req.body.description;
+  payload.videoID = req.body.videoID;
+  payload.guid = uuidv4;
 
   fs.readFile(filePath, fsOpts,
     (err, dataFile) => {
@@ -39,8 +44,6 @@ exports.addItemRequest = (req, res) => {
         console.error(err);
         return;
       }
-
-      payload.guid = uuidv4();
 
       dataFile = JSON.parse(dataFile);
 
