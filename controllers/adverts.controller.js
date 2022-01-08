@@ -167,7 +167,7 @@ exports.deleteItemRequest = (req, res) => {
       // console.log(`removing '${itemID}' from dataFile`);
       dataFile.clips.splice(itemIndex, 1);
       saveChanges(dataFile);
-      res.status(202).send(`Deleted itemID '${itemID}'!`);
+      res.status(200).send(`Deleted itemID '${itemID}'!`);
     })
 }
 
