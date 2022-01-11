@@ -111,11 +111,11 @@ describe('v2 adverts item PUT/DELETE endpoints', () =>  {
       })
   })
 
-  it('should return status 202', (done) => {
+  it('should return status 200', (done) => {
     supertest(Router)
       .delete('/v2/adverts/clips/' + payloadID)
       .set('Accept', 'application/json')
-      .expect(202)
+      .expect(200)
       .end((err) => {
         if (err) {
           return done(err);
@@ -138,11 +138,11 @@ describe('v2 adverts item PUT/DELETE endpoints', () =>  {
       })
   })
 
-  it('should return status 202', (done) => {
+  it('should return status 200', (done) => {
     supertest(Router)
       .delete('/v2/adverts/clips/555')
       .set('Accept', 'application/json')
-      .expect(202)
+      .expect(200)
       .end((err) => {
         if (err) {
           return done(err);
