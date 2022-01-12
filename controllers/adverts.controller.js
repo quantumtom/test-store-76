@@ -56,6 +56,7 @@ exports.createListRequest = (req, res) => {
 // POST and PUT /v2/adverts/clips (item without record locator)
 exports.addItemRequest = (req, res) => {
   let payload = req.body;
+  const position = payload.itemIndex || 0;
 
   fs.readFile(filePath, fsOpts,
     (err, dataFile) => {
@@ -68,7 +69,7 @@ exports.addItemRequest = (req, res) => {
 
       dataFile = JSON.parse(dataFile);
 
-      dataFile.clips.push(payload)
+      dataFile.clips.splice(position, 0, payload);
 
       dataFile = JSON.stringify(dataFile);
 
