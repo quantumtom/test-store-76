@@ -1,12 +1,10 @@
-const fs = require("fs");
-const path = require("path")
-const filePath = path.resolve(__dirname, "../data/adverts.json");
-const fsOpts = {encoding: "utf8"};
 const { v4: uuidv4 } = require("uuid");
+const fs = require("fs");
+const fsOpts = {encoding: "utf8"};
 
 // GET /v2/adverts (collection)
-exports.readListRequest = (req, res) => {
-  fs.readFile(filePath, fsOpts,
+exports.readListRequest = function(req, res) {
+  fs.readFile(req.filePath, fsOpts,
     (err, dataFile) => {
       if (err) {
         console.error(err);
@@ -15,11 +13,12 @@ exports.readListRequest = (req, res) => {
 
       res.status(200).send(JSON.parse(dataFile));
     });
-};
+}
 
 // GET /v2/adverts/clips/:guid (item)
 exports.readItemRequest = (req, res) => {
   const itemID = req.params.guid;
+  const filePath = req.filePath;
 
   fs.readFile(filePath, fsOpts,
     (err, dataFile) => {
@@ -45,6 +44,7 @@ exports.readItemRequest = (req, res) => {
 // POST /v2/adverts (collection)
 exports.createListRequest = (req, res) => {
   const payload = JSON.stringify(req.body);
+  const filePath = req.filePath;
 
   fs.writeFile(filePath, payload, (err, data) => {
     if (err) console.error(err, data)
@@ -57,6 +57,7 @@ exports.createListRequest = (req, res) => {
 exports.addItemRequest = (req, res) => {
   let payload = req.body;
   const position = payload.itemIndex || 0;
+  const filePath = req.filePath;
 
   fs.readFile(filePath, fsOpts,
     (err, dataFile) => {
@@ -82,23 +83,24 @@ exports.addItemRequest = (req, res) => {
 }
 
 // PUT /v2/adverts/clips/:guid (item)
-  exports.replaceItemRequest = (req, res) => {
-    const itemID = req.params.guid;
-    let payload = req.body;
-    let statusCode = 204;
+exports.replaceItemRequest = (req, res) => {
+  const filePath = req.filePath;
+  const itemID = req.params.guid;
+  let payload = req.body;
+  let statusCode = 204;
 
-    if (!itemID) {
-      statusCode = 400;
-      res.status(statusCode).send("No record id.");
-      return;
-    }
+  if (!itemID) {
+    statusCode = 400;
+    res.status(statusCode).send("No record id.");
+    return;
+  }
 
-    if (!payload) {
-      res.status(204).send("No content.");
-      return;
-    }
+  if (!payload) {
+    res.status(204).send("No content.");
+    return;
+  }
 
-    fs.readFile(filePath, fsOpts,
+  fs.readFile(filePath, fsOpts,
     (err, dataFile) => {
       if (err) {
         console.error(err);
@@ -144,6 +146,7 @@ exports.addItemRequest = (req, res) => {
 
 // DELETE /v2/adverts/clips/:guid (item)
 exports.deleteItemRequest = (req, res) => {
+  const filePath = req.filePath;
   const itemID = req.params.guid;
 
   fs.readFile(filePath, fsOpts,
@@ -160,23 +163,17 @@ exports.deleteItemRequest = (req, res) => {
       });
 
       if (itemIndex < 0) {
-        // console.log('itemID ' + itemID + ' not found.');
         res.status(404).send('itemID ' + itemID + ' not found.');
         return;
       }
 
-      // console.log(`removing '${itemID}' from dataFile`);
       dataFile.clips.splice(itemIndex, 1);
-      saveChanges(dataFile);
+      fs.writeFile(filePath, JSON.stringify(dataFile), fsOpts,
+        (err, data) => {
+          if (err) {
+            console.error(err, data)
+          }
+        });
       res.status(200).send(`Deleted itemID '${itemID}'!`);
     })
-}
-
-const saveChanges = (dataFile) => {
-  fs.writeFile(filePath, JSON.stringify(dataFile), fsOpts,
-    (err, data) => {
-      if (err) {
-        console.error(err, data)
-      }
-    });
 }
