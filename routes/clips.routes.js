@@ -1,11 +1,42 @@
 const express = require('express')
-const clipsRouter = express.Router()
-const clipsController = require("../controllers/clips.controller")
+const clipsRoutes = express.Router()
+const path = require('path')
+const clipsPath = path.resolve(__dirname, '../data/adverts.json');
+const clipsController = require('../controllers/clips.controller')
 
-clipsRouter.post('/clips', clipsController.addItemRequest)
-clipsRouter.put('/clips', clipsController.addItemRequest)
-clipsRouter.put('/clips/:guid', clipsController.replaceItemRequest)
-clipsRouter.get('/clips/:guid', clipsController.readItemRequest)
-clipsRouter.delete('/clips/:guid', clipsController.deleteItemRequest)
+clipsRoutes.get('/', (req, res) => {
+  req.filePath = clipsPath;
+  clipsController.readListRequest(req, res);
+});
 
-module.exports = clipsRouter
+clipsRoutes.post('/', (req, res) => {
+  req.filePath = clipsPath;
+  clipsController.createListRequest(req, res);
+});
+
+clipsRoutes.post('/clips', (req, res) => {
+  req.filePath = clipsPath;
+  clipsController.addItemRequest(req, res);
+});
+
+clipsRoutes.put('/clips', (req, res) => {
+  req.filePath = clipsPath;
+  clipsController.addItemRequest(req, res);
+});
+
+clipsRoutes.put('/clips/:guid', (req, res) => {
+  req.filePath = clipsPath;
+  clipsController.replaceItemRequest(req, res);
+});
+
+clipsRoutes.get('/clips/:guid', (req, res) => {
+  req.filePath = clipsPath;
+  clipsController.readItemRequest(req, res);
+});
+
+clipsRoutes.delete('/clips/:guid', (req, res) => {
+  req.filePath = clipsPath;
+  clipsController.deleteItemRequest(req, res);
+})
+
+module.exports = clipsRoutes

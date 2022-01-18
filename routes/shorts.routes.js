@@ -1,42 +1,42 @@
 const express = require('express')
-const path = require("path")
-const shortRouter = express.Router()
-const shortsPath = path.resolve(__dirname, "../data/shorts.json");
-const clipsController = require("../controllers/clips.controller")
+const shortsRoutes = express.Router()
+const path = require('path')
+const shortsPath = path.resolve(__dirname, '../data/shorts.json');
+const clipsController = require('../controllers/clips.controller')
 
-shortRouter.get('/', (req, res) => {
+shortsRoutes.get('/', (req, res) => {
   req.filePath = shortsPath;
   clipsController.readListRequest(req, res);
 });
 
-shortRouter.post('/', (req, res) => {
+shortsRoutes.post('/', (req, res) => {
   req.filePath = shortsPath;
   clipsController.createListRequest(req, res);
 });
 
-shortRouter.post('/clips', (req, res) => {
+shortsRoutes.post('/clips', (req, res) => {
   req.filePath = shortsPath;
   clipsController.addItemRequest(req, res);
 });
 
-shortRouter.put('/clips', (req, res) => {
+shortsRoutes.put('/clips', (req, res) => {
   req.filePath = shortsPath;
   clipsController.addItemRequest(req, res);
 });
 
-shortRouter.put('/clips/:guid', (req, res) => {
+shortsRoutes.put('/clips/:guid', (req, res) => {
   req.filePath = shortsPath;
   clipsController.replaceItemRequest(req, res);
 });
 
-shortRouter.get('/clips/:guid', (req, res) => {
+shortsRoutes.get('/clips/:guid', (req, res) => {
   req.filePath = shortsPath;
   clipsController.readItemRequest(req, res);
 });
 
-shortRouter.delete('/clips/:guid', (req, res) => {
+shortsRoutes.delete('/clips/:guid', (req, res) => {
   req.filePath = shortsPath;
   clipsController.deleteItemRequest(req, res);
 })
 
-module.exports = shortRouter
+module.exports = shortsRoutes
