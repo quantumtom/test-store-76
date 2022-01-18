@@ -1,6 +1,6 @@
-const { v4: uuidv4 } = require("uuid");
-const fs = require("fs");
-const fsOpts = {encoding: "utf8"};
+const { v4: uuidv4 } = require('uuid');
+const fs = require('fs');
+const fsOpts = {encoding: 'utf8'};
 
 // GET /v2/adverts (collection)
 exports.readListRequest = function(req, res) {
@@ -91,12 +91,12 @@ exports.replaceItemRequest = (req, res) => {
 
   if (!itemID) {
     statusCode = 400;
-    res.status(statusCode).send("No record id.");
+    res.status(statusCode).send('No record id.');
     return;
   }
 
   if (!payload) {
-    res.status(204).send("No content.");
+    res.status(204).send('No content.');
     return;
   }
 
