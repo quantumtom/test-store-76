@@ -1,6 +1,6 @@
 const express = require('express')
 const shortsRouter = express.Router()
-const shortsController = require("../controllers/shorts.controller")
+const shortsController = require('../controllers/shorts.controller')
 
 shortsRouter.get('/', shortsController.readAllRequest)
 shortsRouter.post('/', shortsController.createOneRequest)
