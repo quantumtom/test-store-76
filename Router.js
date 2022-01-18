@@ -13,8 +13,8 @@ app.use(express.json( {
   strict: true
 } ))
 
-app.use('/v2/adverts/', advertsRoutes)
-app.use('/v2/shorts/', shortsRoutes)
+app.use('/v2/adverts', advertsRoutes)
+app.use('/v2/shorts', shortsRoutes)
 
 app.disable('x-powered-by')
 

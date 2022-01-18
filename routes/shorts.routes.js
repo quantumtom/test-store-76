@@ -1,8 +1,8 @@
 const express = require('express')
 const path = require("path")
 const shortRouter = express.Router()
-const clipsController = require("../controllers/clips.controller")
 const shortsPath = path.resolve(__dirname, "../data/shorts.json");
+const clipsController = require("../controllers/clips.controller")
 
 shortRouter.get('/', (req, res) => {
   req.filePath = shortsPath;
