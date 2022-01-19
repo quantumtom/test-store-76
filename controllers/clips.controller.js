@@ -53,7 +53,7 @@ exports.createListRequest = (req, res) => {
   });
 }
 
-// POST and PUT /v2/adverts/clips (item without record locator)
+// POST and PUT /v2/adverts/clips (item, without record locator)
 exports.addItemRequest = (req, res) => {
   let payload = req.body;
   const position = payload.itemIndex || 0;
@@ -82,7 +82,7 @@ exports.addItemRequest = (req, res) => {
     });
 }
 
-// PUT /v2/adverts/clips/:guid (item)
+// PUT /v2/adverts/clips/:guid (item, with record locator)
 exports.replaceItemRequest = (req, res) => {
   const filePath = req.filePath;
   const itemID = req.params.guid;
