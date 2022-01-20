@@ -5,7 +5,7 @@ const path = require("path")
 const { v4: uuidv4 } = require("uuid");
 
 const filePath = path.resolve(__dirname, "../data/adverts.json");
-const testFilePath = path.resolve(__dirname, "../data/adverts.routes.test.data.json");
+const testFile = "adverts.routes.test.data.json";
 
 let simulata = {};
 
@@ -17,11 +17,11 @@ let testItem = {
 }
 
 
-fs.copyFile(filePath, testFilePath, (err) => {
+fs.copyFile(filePath, testFile, (err) => {
   if (err) {
     console.error(err);
   }
-  fs.readFile(testFilePath, {encoding: "utf8"},
+  fs.readFile(testFile, {encoding: "utf8"},
     (err, store) => {
       if (err) {
         console.error(err);
