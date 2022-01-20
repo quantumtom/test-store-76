@@ -2,8 +2,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 
-const advertsRoutes = require('./routes/adverts.routes')
-const shortsRoutes = require('./routes/shorts.routes')
+const clipsRoutes = require('./routes/clips.routes')
 
 app.use(cors())
 app.options('*', cors())
@@ -13,8 +12,7 @@ app.use(express.json( {
   strict: true
 } ))
 
-app.use('/v2/adverts', advertsRoutes)
-app.use('/v2/shorts', shortsRoutes)
+app.use('/v2', clipsRoutes)
 
 app.disable('x-powered-by')
 
