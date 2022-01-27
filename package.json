@@ -21,7 +21,10 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^14.3.2",
     "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "grant": "^5.4.19",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
