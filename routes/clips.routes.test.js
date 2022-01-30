@@ -82,7 +82,6 @@ describe('Adverts item POST endpoint', () => {
       .expect(201)
       .expect((res) => {
         payloadID = res.body.guid;
-        console.log(payloadID);
       })
       .end((err) => {
         if (err) {
