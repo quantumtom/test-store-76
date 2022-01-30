@@ -2,35 +2,31 @@ const Router = require('./../Router');
 const supertest = require('supertest');
 const fs = require("fs");
 const path = require("path")
-const { v4: uuidv4 } = require("uuid");
+const { v4 } = require("uuid");
 
 const filePath = path.resolve(__dirname, "../data/adverts.json");
-const testFile = "adverts.routes.test.data.json";
+const testFile = "adverts.routes.test.data.json;"
 
 let simulata = {};
 
 let testItem = {
-  "guid": uuidv4(),
+  "guid": v4,
   "videoID": "999999999",
   "title": "***TEST_TITLE***",
   "description": "***TEST_DESCRIPTION***"
-}
+};
 
+fs.copyFileSync(filePath, testFile, 0);
 
-fs.copyFile(filePath, testFile, (err) => {
-  if (err) {
-    console.error(err);
-  }
-  fs.readFile(testFile, {encoding: "utf8"},
-    (err, store) => {
-      if (err) {
-        console.error(err);
-        return err;
-      }
+fs.readFile(testFile, {encoding: "utf8"},
+  (err, store) => {
+    if (err) {
+      console.error(err);
+      return err;
+    }
 
-      simulata = JSON.parse(store);
-    });
-});
+    simulata = JSON.parse(store);
+  });
 
 describe('Adverts collection GET endpoint', () => {
   it('should return status 200', (done) => {
@@ -76,12 +72,31 @@ describe('Adverts collection GET endpoint', () => {
 })
 
 describe('Adverts item POST endpoint', () => {
+  let payloadID = '';
+
   it('should return status 201', (done) => {
     supertest(Router)
       .post('/v2/adverts/clips')
       .send(testItem)
       .set('Accept', 'application/json')
       .expect(201)
+      .expect((res) => {
+        payloadID = res.body.guid;
+        console.log(payloadID);
+      })
+      .end((err) => {
+        if (err) {
+          return done(err);
+        }
+        return done();
+      })
+  })
+
+  it('should return status 200', (done) => {
+    supertest(Router)
+      .delete('/v2/adverts/clips/' + payloadID)
+      .set('Accept', 'application/json')
+      .expect(200)
       .end((err) => {
         if (err) {
           return done(err);
@@ -165,6 +180,6 @@ describe('v2 adverts item PUT/DELETE endpoints', () =>  {
   })
 });
 
-// fs.unlink(testFilePath, (err) => {
-//   if (err) throw err;
-// });
+fs.unlink(testFile, (err) => {
+  if (err) throw err;
+});
