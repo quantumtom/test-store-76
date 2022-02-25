@@ -1,5 +1,5 @@
 const Router = require('./Router');
-const SERVER_PORT = process.env.PORT || '8080';
+const SERVER_PORT = process.env.SERVER_PORT || '8080';
 
 exports.start = () => {
   Router.set('port', SERVER_PORT)
