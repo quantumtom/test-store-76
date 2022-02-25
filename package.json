@@ -10,7 +10,11 @@
   "main": "index.js",
   "testEnvironment": "node",
   "jest": {
-    "testTimeout": 3000
+    "testTimeout": 2000,
+    "testPathIgnorePatterns": [
+      "<rootDir>/data/",
+      "<rootDir>/package.json"
+    ]
   },
   "scripts": {
     "test": "jest",
