@@ -5,7 +5,7 @@ const path = require("path")
 const { v4 } = require("uuid");
 
 const filePath = path.resolve(__dirname, "../data/adverts.json");
-const testFile = path.resolve(__dirname, "../test/adverts.routes.test.data.json");
+const testFile = path.resolve(__dirname, "../data/adverts.routes.test.data.json");
 
 let simulata = {};
 
