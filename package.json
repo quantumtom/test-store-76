@@ -13,7 +13,6 @@
     "testTimeout": 2000,
     "testPathIgnorePatterns": [
       "<rootDir>/data/",
-      "<rootDir>/test/",
       "<rootDir>/package.json"
     ]
   },
