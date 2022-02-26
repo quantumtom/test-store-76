@@ -20,6 +20,11 @@ clipsRoutes.post('/adverts/clips', (req, res) => {
   clipsController.addItemRequest(req, res);
 });
 
+clipsRoutes.post('/adverts/clips/:guid', (req, res) => {
+  req.filePath = advertsPath;
+  clipsController.addItemRequest(req, res);
+});
+
 clipsRoutes.put('/adverts/clips', (req, res) => {
   req.filePath = advertsPath;
   clipsController.addItemRequest(req, res);
@@ -51,6 +56,11 @@ clipsRoutes.post('/shorts', (req, res) => {
 });
 
 clipsRoutes.post('/shorts/clips', (req, res) => {
+  req.filePath = shortsPath;
+  clipsController.addItemRequest(req, res);
+});
+
+clipsRoutes.post('/shorts/clips/:guid', (req, res) => {
   req.filePath = shortsPath;
   clipsController.addItemRequest(req, res);
 });
